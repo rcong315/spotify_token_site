@@ -1,7 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
-const { default: open } = require('open');
+// Import 'open' dynamically as it's an ES Module
+let open;
+import('open').then(module => {
+  open = module.default;
+});
 const crypto = require('crypto');
 
 // Spotify API credentials from .env file
@@ -196,7 +200,18 @@ app.listen(PORT, () => {
   `);
   
   // Open the browser automatically
-  open(`http://localhost:${PORT}`);
+  if (open) {
+    open(`http://localhost:${PORT}`);
+  } else {
+    // If open module is not loaded yet, wait for it
+    import('open').then(module => {
+      open = module.default;
+      open(`http://localhost:${PORT}`);
+    }).catch(err => {
+      console.error('Failed to open browser:', err);
+      console.log(`Please navigate to http://localhost:${PORT} manually.`);
+    });
+  }
 });
 
 // Add a route to refresh tokens
