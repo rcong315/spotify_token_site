@@ -1,0 +1,15 @@
+{
+  "name": "spotify-token",
+  "version": "1.0.0",
+  "description": "Script to authorize user through Spotify and get an access token",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "open": "^9.1.0"
+  }
+}
